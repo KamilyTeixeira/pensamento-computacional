@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jogo Consciência Negra</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background-color: #f8f8f8;
+      margin: 20px;
+    }
+
+    #quiz-container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    #question {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    #options {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .option {
+      padding: 10px;
+      background-color: #4CAF50;
+      color: #fff;
+      text-align: center;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .option:hover {
+      background-color: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="quiz-container">
+    <h2>Consciência Negra Quiz</h2>
+    <div id="question"></div>
+    <div id="options"></div>
+    <button onclick="nextQuestion()">Próxima Pergunta</button>
+  </div>
+
+  <script>
+    const questions = [
+      {
+        question: "Quando é celebrado o Dia da Consciência Negra no Brasil?",
+        options: ["20 de novembro", "12 de outubro", "1 de maio", "7 de setembro"],
+        correctAnswer: "20 de novembro"
+      },
+      {
+        question: "Quem foi o líder do movimento contra a discriminação racial nos Estados Unidos, que ficou famoso por seu discurso 'Eu tenho um sonho'?",
+        options: ["Malcolm X", "Nelson Mandela", "Martin Luther King Jr.", "Rosa Parks"],
+        correctAnswer: "Martin Luther King Jr."
+      },
+      {
+        question: "Qual é o nome da primeira mulher negra a vencer o prêmio Nobel da Paz?",
+        options: ["Oprah Winfrey", "Angela Davis", "Wangari Maathai", "Toni Morrison"],
+        correctAnswer: "Wangari Maathai"
+      },
+      {
+        question: "Qual foi o líder negro brasileiro que fundou o Quilombo dos Palmares?",
+        options: ["Zumbi dos Palmares", "Machado de Assis", "Dandara dos Palmares", "Luiz Gama"],
+        correctAnswer: "Zumbi dos Palmares"
+      },
+      {
+        question: "Quem foi a primeira mulher negra a se tornar presidente do Brasil?",
+        options: ["Dilma Rousseff", "Marta Suplicy", "Marina Silva", "Benedita da Silva"],
+        correctAnswer: "Dilma Rousseff"
+      },
+      {
+        question: "Qual é o nome da ativista negra que liderou o movimento pelos direitos civis nos EUA e é conhecida por se recusar a ceder seu assento a um homem branco em um ônibus?",
+        options: ["Rosa Parks", "Harriet Tubman", "Coretta Scott King", "Maya Angelou"],
+        correctAnswer: "Rosa Parks"
+      },
+      // Adicione mais perguntas conforme necessário
+    ];
+
+    let currentQuestion = 0;
+    const questionElement = document.getElementById("question");
+    const optionsContainer = document.getElementById("options");
+
+    function loadQuestion() {
+      const currentQuestionData = questions[currentQuestion];
+      questionElement.textContent = currentQuestionData.question;
+
+      optionsContainer.innerHTML = "";
+      currentQuestionData.options.forEach((option, index) => {
+        const optionElement = document.createElement("div");
+        optionElement.textContent = option;
+        optionElement.classList.add("option");
+        optionElement.setAttribute("onclick", `checkAnswer(${index})`);
+        optionsContainer.appendChild(optionElement);
+      });
+    }
+
+    function checkAnswer(index) {
+      const selectedAnswer = questions[currentQuestion].options[index];
+      const correctAnswer = questions[currentQuestion].correctAnswer;
+
+      if (selectedAnswer === correctAnswer) {
+        alert("Resposta correta!");
+      } else {
+        alert(`Resposta incorreta. A resposta correta é: ${correctAnswer}`);
+      }
+
+      // Avançar para a próxima pergunta
+      currentQuestion++;
+
+      // Verificar se há mais perguntas ou se o quiz acabou
+      if (currentQuestion < questions.length) {
+        loadQuestion();
+      } else {
+        alert("Parabéns! Você completou o quiz.");
+        resetQuiz();
+      }
+    }
+
+    function nextQuestion() {
+      if (currentQuestion < questions.length) {
+        loadQuestion();
+      } else {
+        alert("O quiz acabou. Parabéns!");
+        resetQuiz();
+      }
+    }
+
+    function resetQuiz() {
+      currentQuestion = 0;
+      loadQuestion();
+    }
+
+    // Inicializar o quiz
+    loadQuestion();
+  </script>
+
+</body>
+</html>
